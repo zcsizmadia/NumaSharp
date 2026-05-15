@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Description>High-performance benchmarks for NumaSharp NUMA-aware scheduling and memory on NUMA hardware.</Description>
+    <!-- CA2007: ConfigureAwait — not applicable for exe entry point code. -->
+    <!-- CA1852: Seal internal types — intentionally left open for benchmark subclassing. -->
+    <NoWarn>$(NoWarn);CA2007;CA1852</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NumaSharp\NumaSharp.csproj" />
+  </ItemGroup>
+
+</Project>

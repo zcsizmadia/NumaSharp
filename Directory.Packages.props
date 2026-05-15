@@ -1,0 +1,14 @@
+<Project>
+
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <!-- Testing: TUnit v1.44.* -->
+  <ItemGroup>
+    <PackageVersion Include="TUnit" Version="1.44.0" />
+    <PackageVersion Include="TUnit.Assertions" Version="1.44.0" />
+    <PackageVersion Include="TUnit.Engine" Version="1.44.0" />
+  </ItemGroup>
+
+</Project>

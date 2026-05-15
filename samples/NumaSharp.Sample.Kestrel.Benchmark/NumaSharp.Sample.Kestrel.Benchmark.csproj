@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Description>Kestrel transport benchmark — default SocketTransport vs NumaSharp Epoll.</Description>
+    <!-- CA2007: ConfigureAwait — not applicable in exe entry-point / benchmark code. -->
+    <!-- CA1852: Seal internal types — benchmark scenario hierarchy intentionally open. -->
+    <!-- CA1305: IFormatProvider — display-only formatting, current culture is correct. -->
+    <NoWarn>$(NoWarn);CA2007;CA1852;CA1305</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NumaSharp.Transport.Epoll\NumaSharp.Transport.Epoll.csproj" />
+  </ItemGroup>
+
+</Project>

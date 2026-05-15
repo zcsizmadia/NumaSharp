@@ -1,0 +1,70 @@
+<Project>
+
+  <!-- Common properties for all projects -->
+
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+
+    <DefaultTargetFrameworks>net8.0;net9.0;net10.0</DefaultTargetFrameworks>
+    <DefaultTargetFramework>net10.0</DefaultTargetFramework>
+
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest-Recommended</AnalysisLevel>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+
+    <!-- NuGet metadata -->
+    <Authors>Zoltan Csizmadia</Authors>
+    <Company>Zoltan Csizmadia</Company>
+    <Product>NumaSharp</Product>
+    <Copyright>Copyright © 2026 Zoltan Csizmadia</Copyright>
+    <RepositoryUrl>https://github.com/zcsizmadia/NumaSharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <!-- Deterministic builds -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+
+    <!-- Disable obsolete binary formatter -->
+    <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+
+    <!-- By default, projects are not packable; individual packable projects will override this -->
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- Class libraries: multi-target net8/9/10 -->
+  <PropertyGroup Condition="'$(OutputType)' != 'Exe'
+      and !$(MSBuildProjectName.EndsWith('.Tests'))
+      and !$(MSBuildProjectName.EndsWith('.IntegrationTests'))
+      and !$(MSBuildProjectName.Contains('.Sample.'))">
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Test projects: single framework, net10.0 -->
+  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))
+      or $(MSBuildProjectName.EndsWith('.IntegrationTests'))">
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <IsTestProject>true</IsTestProject>
+    <EnableMicrosoftTestingPlatformRunner>true</EnableMicrosoftTestingPlatformRunner>
+    <!-- CA1707: underscores in test method names are a widely accepted convention -->
+    <NoWarn>$(NoWarn);CA1707</NoWarn>
+  </PropertyGroup>
+
+  <!-- Sample / console projects: single framework, net10.0 -->
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('.Sample.'))">
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <!-- Samples are demo code; logger call-site perf warnings are not applicable here -->
+    <NoWarn>$(NoWarn);CA1848;CA1873</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(IsPackable)">
+    <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

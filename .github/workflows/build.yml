@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install .NET SDKs
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            10.0.x
+
+      - name: Build
+        shell: bash
+        run: |
+          dotnet restore
+          dotnet build -c Release --no-restore
+
+      - name: Test
+        shell: bash
+        run: |
+          dotnet test -c Release --no-build
+
+      - name: Pack NuGet packages
+        shell: bash
+        run: |
+          dotnet pack src/NumaSharp/ -c Release --no-build -o nupkgs
+          dotnet pack src/NumaSharp.Transport.Epoll/ -c Release --no-build -o nupkgs 
+
+      - name: Upload NuGet package artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: nuget-packages
+          path: nupkgs/*.nupkg

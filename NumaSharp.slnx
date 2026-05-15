@@ -1,0 +1,28 @@
+<Solution>
+
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="README.md" />
+    <File Path="LICENSE" />
+  </Folder>
+
+  <Folder Name="/src/">
+    <Project Path="src/NumaSharp/NumaSharp.csproj" />
+    <Project Path="src/NumaSharp.Transport.Epoll/NumaSharp.Transport.Epoll.csproj" />
+  </Folder>
+
+  <Folder Name="/tests/">
+    <Project Path="tests/NumaSharp.Core.Tests/NumaSharp.Core.Tests.csproj" />
+    <Project Path="tests/NumaSharp.Scheduler.Tests/NumaSharp.Scheduler.Tests.csproj" />
+    <Project Path="tests/NumaSharp.IntegrationTests/NumaSharp.IntegrationTests.csproj" />
+  </Folder>
+
+  <Folder Name="/samples/">
+    <Project Path="samples/NumaSharp.Sample.Benchmark/NumaSharp.Sample.Benchmark.csproj" />
+    <Project Path="samples/NumaSharp.Sample.Kestrel.Benchmark/NumaSharp.Sample.Kestrel.Benchmark.csproj" />
+  </Folder>
+
+</Solution>
