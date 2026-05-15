@@ -48,7 +48,7 @@ jobs:
           echo "Validating version: $TAG_VERSION"
 
           # Extract version from csproj
-          PROJECT_VERSION="$(dotnet msbuild NumaSharp/ -getProperty:Version -nologo -v:q | tr -d '\r' | xargs)"
+          PROJECT_VERSION="$(dotnet msbuild src/NumaSharp/ -getProperty:Version -nologo -v:q | tr -d '\r' | xargs)"
 
           # Check if the tag version matches the project version
           if [[ "$TAG_VERSION" != "$PROJECT_VERSION" ]]; then
