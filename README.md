@@ -170,8 +170,6 @@ Comparison between the default Kestrel `SocketTransport` and `NumaSharp.Transpor
 
 Latency improvements (P99, GET /data 64 KB): **70.0 ms → 25.7 ms** (63% reduction).
 
-See the full raw output in [result-kestrel.txt](result-kestrel.txt) and the benchmark source in [samples/NumaSharp.Sample.Kestrel.Benchmark](samples/NumaSharp.Sample.Kestrel.Benchmark/).
-
 ---
 
 ## License
