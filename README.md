@@ -151,6 +151,29 @@ docs/
 
 ---
 
+## Benchmarks
+
+> **Environment:** .NET 10.0.8 · Ubuntu 22.04.5 LTS (kernel 6.8.0-94-generic) · 2 NUMA nodes · 96 CPUs · 512 keep-alive connections · 5 s measurement window
+
+Comparison between the default Kestrel `SocketTransport` and `NumaSharp.Transport.Epoll` running on a 2-socket NUMA server.
+
+| Endpoint | Kestrel Default RPS | NumaSharp Epoll RPS | Throughput | Speedup |
+|---|---:|---:|---:|:---:|
+| GET /ping | 195,259 | 214,858 | — | **1.10×** |
+| GET /data (4 KB) | 188,673 | 230,766 | 901 MB/s | **1.22×** |
+| GET /data (64 KB) | 24,246 | 44,792 | 2,800 MB/s | **1.85× ★** |
+| POST /echo (512 B) | 230,691 | 276,885 | 135 MB/s | **1.20×** |
+| POST /echo (4 KB) | 124,880 | 155,252 | 607 MB/s | **1.24×** |
+| POST /echo (64 KB) | 16,321 | 29,957 | 1,872 MB/s | **1.84× ★** |
+
+**★ Largest gains on large payloads** — up to **1.85×** more RPS on 64 KB transfers, where NUMA-local buffer allocation and cache-warm I/O paths make the biggest difference.
+
+Latency improvements (P99, GET /data 64 KB): **70.0 ms → 25.7 ms** (63% reduction).
+
+See the full raw output in [result-kestrel.txt](result-kestrel.txt) and the benchmark source in [samples/NumaSharp.Sample.Kestrel.Benchmark](samples/NumaSharp.Sample.Kestrel.Benchmark/).
+
+---
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
